@@ -1,1 +1,160 @@
 /* You can add global styles to this file, and also import other style files */
+/* ---- reset ---- */
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: bisque;
+}
+
+img {
+  width: 200px;
+}
+
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+td, th {
+  border-bottom: 1px solid grey;
+  padding: 2px;
+}
+
+th {
+  background-color: lightgreen;
+}
+
+tr {
+  background-color: antiquewhite;
+}
+
+tr:nth-child(even) {
+  background-color: lightcyan;
+}
+
+
+input {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+  border: 0.5px solid  rgb(55, 87, 87);
+  border-radius: 2px;
+  padding: 3px;
+  box-shadow: 1px 1px 3px rgb(20, 32, 32);
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  text-align: center;
+  color: rgba(7, 146, 14, .9)
+}
+.subtitle {
+  text-align: center;
+  color:  rgb(20, 32, 32);
+  font-weight: 100;
+}
+
+.container {
+
+}
+
+.table-list{
+  width: 90%;
+  top: 20px;
+  margin: 0 auto;
+}
+
+.food-form {
+  transform: scale(1.1);
+  opacity: .2;
+  transition: all .3s ease-in;
+}
+
+.animate {
+  transform: scale(1);
+  transition: all .3s ease-out;
+  opacity: 1;
+}
+
+.card {
+  background-color: #ffffff;
+  width: 90%;
+  margin: 0 auto 1rem auto;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 1px 1px 6px lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease-out;
+}
+
+.card:hover {
+  box-shadow: 3px 3px 4px  rgb(55, 87, 87);
+}
+
+.btn {
+  display: block;
+  width: 90%;
+  border: none;
+  background-color: rgb(55, 87, 87);
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 6px;
+  margin: 0 auto ;
+  box-shadow: 3px 3px 2px  rgb(20, 32, 32);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease-out;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: rgba(20, 32, 32, .7);
+  width: 92%;
+}
+
+.btn--no-margin {
+  margin: 0;
+}
+
+.alert {
+  text-align: center;
+  background-color : pink;
+  color: red;
+}
+
+@media only screen and (min-width: 768px) {
+
+  .content {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    width: 40%;
+  }
+}

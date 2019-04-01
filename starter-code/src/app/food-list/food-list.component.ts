@@ -7,41 +7,86 @@ import foods from '../foods';
   styleUrls: ['./food-list.component.css']
 })
 export class FoodListComponent implements OnInit {
-  foodList: Object[];
-  newFood: Object = {};
-  specialFood: Array<string>;
-  showForm: boolean;
-  calCount: number;
-  qty: number;
+  foods: any[] = foods;
+  foodName: string;
+  foodCalories: number;
+  foodImageUrl: string;
+  foodQuantity: number;
+  inputValue: string;
+  quantity: number = foods.length;
+  addBtnText: string = 'Add Food'
+  showForm: boolean = false;
+  showWarning: boolean = false;
+  todayList: any[] = [];
+  calCounter: number = 0;
+  isAnimated = false;
+
 
   constructor() { }
 
   ngOnInit() {
-    this.foodList = foods;
-    this.showForm = false;
-    this.specialFood = [];
-    this.calCount = 0;
-    this.qty = 0;
   }
-  addFood() {
-    this.foodList.unshift(this.newFood);
-    this.newFood = {};
-    if (this.showForm) {
-      this.showForm = false;
+
+  activateSubmitBtn() {
+    console.log('click')
+    
+  }
+
+  addItem(): void {
+    this.showWarning = false;
+    if(!this.showForm) {
+      setTimeout(()=> this.isAnimated = !this.isAnimated, 1);
+      this.showForm = !this.showForm;
+      this.addBtnText = 'Submit';
+    } else {
+      if(this.foodName&&this.foodCalories&&this.foodImageUrl&&this.foodQuantity) {
+
+        this.foods.unshift({name: this.foodName , calories: this.foodCalories, image: this.foodImageUrl, quantity: this.foodQuantity});
+        this.foodName = null;
+        this.foodCalories = null;
+        this.foodImageUrl = null;
+        this.foodQuantity = null;
+        this.quantity = this.foods.length;
+        this.addBtnText = 'Add Food';
+        setTimeout(() => this.showForm = !this.showForm, 300)
+        this.isAnimated = !this.isAnimated
+      }else {
+        this.showWarning = !this.showWarning
+      }
     }
   }
-  showFormAddFood() {
-    this.showForm = true;
+
+  handleAddToListBtn(item) {
+    let exist: boolean = false;
+    if(!this.todayList.length) {
+      console.log('no item')
+      
+      item.timesInList = 1;
+      this.todayList.push(item);
+
+    }else {
+      this.todayList.forEach(elem => {
+        if(item.name === elem.name) {
+          exist = true
+        }
+      });
+      if(exist) {
+        item.timesInList++
+      }else {
+        item.timesInList = 1;
+        this.todayList.push(item)
+      }
+    }
+    this.calCounter = this.getTotalCalories()
   }
-  addToSpecialties(food) {
 
-    this.specialFood.push(food);
-    this.calCount+=food.calories;
-    this.qty+=food.quantity;
-
-    console.log(this.specialFood);
-    console.log(this.calCount);
-
+  getTotalCalories() {
+    let count: number = 0;
+    this.todayList.forEach(item => {
+      let totalCal: number = item.calories * item.timesInList;
+      count += totalCal;
+    })
+    return count;
   }
 
 }

@@ -1,36 +1,52 @@
-<h2>Food list</h2>
-<button (click)="showFormAddFood()">Add food</button>
-<div *ngIf = "showForm===true">
-  <label for="image">Image</label>
-  <div>
-    <input type="text" [(ngModel)]="newFood.image">
+
+<div class="container">
+  <div class="content">
+    <div class="table-list">
+      <table>
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>Calories</th>
+          <th>Qty</th>
+        </tr>
+        <tr *ngFor="let food of todayList, let i=index">
+          <td>{{ i+1 }}</td>
+          <td>{{ food.name }}</td>
+          <td>{{ food.calories }}</td>
+          <td>{{ food.timesInList }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            Total Calories: {{ calCounter }}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <input class="btn" type="button" [value]="addBtnText" (click)="addItem()">
+    <div class="food-form" [ngClass]="{'animate': isAnimated}" *ngIf="showForm">
+      <input  type ="text" placeholder="food name" [(ngModel)]="foodName">
+      <input  type="number" min="0" placeholder="calories" [(ngModel)]="foodCalories">
+      <input  type="text" placeholder="image url" [(ngModel)]="foodImageUrl">
+      <input  type="number" min="0" placeholder="quantity" [(ngModel)]="foodQuantity">
+    </div>
+    <div *ngIf="showWarning" class="warning">
+      <p class = "alert">Fill all the fields...</p>
+    </div>
+    <div>
+      <h3 class="subtitle">Search between {{ quantity }} types of food: </h3>
+      <input placeholder="food name" type="text" #foodNameVar (keyup)="0">
+      <input placeholder="max of calories" type="number" #cal (keyup)="0">
+      <input class="btn" type="button" value="Clear" (click)="foodNameVar.value = cal.value = null ">
+    </div>
   </div>
-  <label for="name">Name</label>
-  <div>
-    <input type="text" [(ngModel)]="newFood.name">
-  </div>
-  <label for="calories">Calories</label>
-  <div>
-    <input type="text" [(ngModel)]="newFood.calories">
-  </div>
-  <button (click)="addFood()">Submit</button>
-</div>
-<div class="food-parent">
-  <div *ngFor = "let food of foodList" class="food-child">
-    <img [src]="food.image" alt="lol" height="100px">
-    <hr>
-    <p>Name: {{food.name}}</p>
-    <p>Calories: {{food.calories}}</p>
-    <input type="number" value="1"  [(ngModel)]="food.quantity">
-    <button (click)="addToSpecialties(food)">Add to specialties</button>
-  </div>
-</div>
-<!-- specialties -->
-<hr>
-<div>
-  <h3>Specialites</h3>
-  <p>Calories: {{calCount}}</p>
-  <ul *ngFor="let food of specialFood">
-    <li>Name: {{this.food.name}} qty: {{this.food.quantity}}</li>
+  <ul>
+    <li class="card" *ngFor="let food of foods | filter: 'name':foodNameVar.value | calFilter: 'calories':cal.value">
+      <img [src]="food.image" alt="no img" >
+      <p>What is this: {{ food.name }}</p>
+      <p>How many calories: {{ food.calories }}</p>
+      <input class="btn btn--no-margin" type="button" value="Add to Today's List" (click)="handleAddToListBtn(food)">
+    </li>
   </ul>
+
 </div>
+
